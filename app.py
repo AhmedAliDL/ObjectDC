@@ -109,15 +109,16 @@ def main():
                     st.subheader("Original Image")
                     st.image(file)
                     st.subheader("Detected Image")
-                    if st.session_state.counter != 1:
+                    counter = len(os.listdir(r"runs\detect"))
+                    if counter > 1:
                         if not os.path.exists(
-                                fr"runs\detect\predict{st.session_state.counter}\{file.name.split('.')[0]}.png"):
+                                fr"runs\detect\predict{counter}\{file.name.split('.')[0]}.png"):
                             model.predict(f"user/{file.name.split('.')[0]}.png",
                                           save=True)
                         if os.path.exists(
-                                fr"runs\detect\predict{st.session_state.counter}\{file.name.split('.')[0]}.png"):
+                                fr"runs\detect\predict{counter}\{file.name.split('.')[0]}.png"):
                             st.image(
-                                fr"runs\detect\predict{st.session_state.counter}\{file.name.split('.')[0]}.png")
+                                fr"runs\detect\predict{counter}\{file.name.split('.')[0]}.png")
                     else:
                         if not os.path.exists(fr"runs\detect\predict\{file.name.split('.')[0]}.png"):
                             model.predict(f"user/{file.name.split('.')[0]}.png",
