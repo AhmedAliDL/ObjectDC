@@ -95,7 +95,8 @@ def main():
         files = st.file_uploader("Upload your image:", accept_multiple_files=True,
                                  type=["jpg",
                                        "jpeg",
-                                       "png"])
+                                       "png",
+                                       "jfif"])
 
         if files:
             for file in files:
@@ -109,7 +110,9 @@ def main():
                     st.subheader("Original Image")
                     st.image(file)
                     st.subheader("Detected Image")
-                    counter = len(os.listdir(r"runs\detect"))
+                    counter = 0
+                    if os.path.exists(r"runs\detect"):
+                        counter = len(os.listdir(r"runs\detect"))
                     if counter > 1:
                         if not os.path.exists(
                                 fr"runs\detect\predict{counter}\{file.name.split('.')[0]}.png"):
@@ -126,8 +129,6 @@ def main():
 
                         if os.path.exists(fr"runs\detect\predict\{file.name.split('.')[0]}.png"):
                             st.image(fr"runs\detect\predict\{file.name.split('.')[0]}.png")
-
-            st.session_state.counter += 1
 
     elif task == "Video":
         files = st.file_uploader("Upload your video:",
@@ -160,7 +161,9 @@ def main():
                             st.video(f"user/{file.name.split('.')[0]}c.mp4")
                 elif c_d_task == "detect":
                     st.subheader("Detected Video")
-                    counter = len(os.listdir(r"runs\detect"))
+                    counter = 0
+                    if os.path.exists(r"runs\detect"):
+                        counter = len(os.listdir(r"runs\detect"))
                     if counter > 1:
                         if not os.path.exists(
                                 fr"runs\detect\predict\{file.name.split('.')[0]}.mp4") \
@@ -191,7 +194,6 @@ def main():
 
                         if os.path.exists(fr"runs\detect\predict\{file.name.split('.')[0]}.mp4"):
                             st.video(fr"runs\detect\predict\{file.name.split('.')[0]}.mp4")
-
 
 if __name__ == "__main__":
     main()
